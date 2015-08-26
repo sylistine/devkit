@@ -133,7 +133,7 @@ Server.prototype.onRun = function(message) {
     logger.log('run info: ', runInfo);
     this.client.send(JSON.stringify(runInfo));
     if (this.isBrowserConnected()) {
-      thos.browserSocket.emit('run', {
+      this.browserSocket.emit('run', {
         status: 'ok',
       });
     };
