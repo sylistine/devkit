@@ -32,7 +32,6 @@ exports = Class(function () {
     this._socket.on('init', bind(this, function(message) {
       var text = location.protocol + '//' + location.host + ',' + message.companionPort + ',' + message.secret;
       this._ui.setQRCodeText(text);
-      this._ui.setDebuggerConnectUri(message.debuggerPort);
     }));
 
     this._socket.on('clientConnected', bind(this, function() {
@@ -57,7 +56,6 @@ exports = Class(function () {
   this.getManifest = function () { return this._manifest; };
 
   this.run = function(cb) {
-    console.log('run');
     this._ui.setBuilding(true);
     return util.ajax
       .get({

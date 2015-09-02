@@ -18,6 +18,14 @@ pixelated()
   image-rendering pixelated                 /* CSS4 Proposed  */
   -ms-interpolation-mode nearest-neighbor   /* IE8+           */
 
+body
+  background-color #252F3B
+  color #9CA3AB
+
+a
+  color #2F81FF
+  text-decoration none
+
 #devkit
   height 100%
   width 100%
@@ -43,40 +51,77 @@ pixelated()
 
       #notConnectedEl
         position relative
+        flex-flow column
+        width 250px
 
         #qrcode
           flex 1
+          border 20px solid white
 
           #qr
-            display flex
-            justify-content center
 
             img
               pixelated()
+              width 100%
+
+        #instruction
+          margin-top 5px
+          font-size 15px
+
+          .bold
+            font-weight 600
+          div
+            margin-top 15px
 
       #connectedEl
         position relative
         display flex
         align-items center
         flex-direction column
+        width 250px
+        font-size 15px
 
         #deviceImage
           flex 1
           margin 20px
-          width 200px
+          width 120px
 
-        #run
+        #deviceName
           flex 2
+          color #EDF3F9
           position relative
-          width 100px
+          width 100%
+          text-align center
 
-        #connectUri
-          font-size 25px
-          font-weight 300
-          text-align: center
-          margin 20px
+        #deviceInfo
           flex 3
-          user-select auto
+          display flex
+          justify-content space-between
+          margin-top 40px
+          width 100%
+          .left
+            flex 1
+            display flex
+            flex-flow column
+            align-items flex-start
+          .right
+            flex 2
+            display flex
+            flex-flow column
+            align-items flex-end
+          .row
+            margin-bottom 10px
+
+        #showHideDebuggerBtn
+          font-size 15px
+          font-weight 300
+          border-radius 999px
+          padding 10px 30px 10px 30px
+          border-color #aaa
+          margin-top 50px
+          transition background-color 0.1s
+          &:not(:hover)
+            background-color transparent
 
       #build-spinner
         position absolute

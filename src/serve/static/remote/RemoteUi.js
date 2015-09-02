@@ -32,23 +32,39 @@ exports = Class(CenterLayout, function (supr) {
       {id: 'contents', children: [
         {id: 'header', text: 'Device'},
         {id: 'notConnectedEl', children: [
-          {id: 'qrcode', type: QRCode, qrOpts: {
-            colorLight: '#2A2828',
-            colorDark: '#AAAAAA'
-          }},
+          {id: 'qrcode', type: QRCode},
+          {id: 'instruction', children: [
+            {className: 'bold', text: 'Instruction:'},
+            {children: [
+              {text: '1. Download and Install'},
+              {tag: 'a', attrs: {
+                //TODO replace with real url
+                href: 'http://www.google.com',
+              }, text: 'js.io Companion app.'}
+            ]},
+            {children: [
+              {tag: 'span', text: '2. Open '},
+              {tag: 'span', className: 'bold', text: 'js.io Companion'},
+              {tag: 'span', text: ' app and scan this QR code to connect.'}
+            ]}
+          ]}
         ]},
         {id: 'connectedEl', children: [
           {id: 'deviceImage', tag: 'img'},
 
-          {
-            id: 'run',
-            type: Button,
-            text: 'Run'
-          },
-          {
-            id: 'connectUri'
-          },
+          {id: 'deviceName', text: 'Simon\'s iPhone 6+'},
+          {id: 'deviceInfo', children: [
+            {className: 'left', children: [
+              {className: 'row', text: 'Resolution:'},
+              {className: 'row', text: 'FPS:'}
+            ]},
+            {className: 'right', children: [
+              {id: 'deviceResolution', className: 'row', text: '750x1334px'},
+              {id: 'deviceFPS', className: 'row', text: '59fps'}
+            ]}
+          ]},
 
+          {id: 'showHideDebuggerBtn', type: Button, text: 'Show/Hide Debugger'},
         ]},
         {id: 'build-spinner', children: [{id: 'spinner'}]},
       ]}
@@ -71,9 +87,6 @@ exports = Class(CenterLayout, function (supr) {
     supr(this, 'buildWidget', arguments);
     this.setConnected(this._isConnected);
     this.updateDeviceImage();
-    this.run.on('Select', bind(this, function() {
-      this._remote.run();
-    }));
   };
 
   this.setBuilding = function(isBuilding) {
@@ -109,11 +122,6 @@ exports = Class(CenterLayout, function (supr) {
 
   this.setQRCodeText = function(text) {
     this.qrcode.updateText(text);
-  };
-
-
-  this.setDebuggerConnectUri = function(debuggerPort) {
-    this.connectUri.textContent = 'Connect your debugger client to ' + location.host + ':' + debuggerPort;
   };
 
   this.updateDeviceImage = function() {
