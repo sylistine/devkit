@@ -68,10 +68,12 @@ ClientConnection.prototype.onClose = function() {
 
 
 
-function Server(companionMonitorPort, debuggerPort) {
+function Server(companionMonitorPort, debuggerPort, externalDebuggerPort) {
   events.EventEmitter.call(this);
   this.companionMonitorPort = companionMonitorPort || 6001;
   this.debuggerPort = debuggerPort || 6000;
+  this.externalDebuggerPort = externalDebuggerPort || this.debuggerPort;
+  console.log(this.debuggerPort, debuggerPort);
 }
 
 util.inherits(Server, events.EventEmitter);
@@ -128,7 +130,7 @@ Server.prototype.onRun = function(message) {
       path: 'http://' + message.hostname + '/apps/' + message.route,
       shortName: message.shortName,
       debuggerHost: message.hostname,
-      debuggerPort: this.debuggerPort
+      debuggerPort: this.externalDebuggerPort
     };
     logger.log('run info: ', runInfo);
     this.client.send(JSON.stringify(runInfo));

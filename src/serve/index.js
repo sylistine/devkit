@@ -28,12 +28,14 @@ var Z_BEST_COMPRESSION = 9;
 // launches the web server
 exports.serveWeb = function (opts, cb) {
   var port = opts.port;
+  var debuggerPort = opts.debuggerPort;
+  var externalDebuggerPort = opts.externalDebuggerPort;
 
   var app = express();
   var server = http.Server(app);
 
   app.io = require('socket.io')(server);
-  var companionMonitorServer = new companionMonitor.Server();
+  var companionMonitorServer = new companionMonitor.Server(6001, debuggerPort, externalDebuggerPort);
   companionMonitorServer.start(app.io);
 
   app.use(compression({level: Z_BEST_COMPRESSION}));
